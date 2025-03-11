@@ -16,7 +16,9 @@ def register_user(request):
             # messages.success(request, "Registration successful.")
             # return HttpResponse("Homepage")
         messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = RegisterForm()
+    else:
+        form = RegisterForm()
+    
     return render(request, "register/register.html", {"register_user": form})
 
 
@@ -30,7 +32,7 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return render(request, "commentstoreapp/home.html")
+                return render(request, "payapp/home.html")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
