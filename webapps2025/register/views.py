@@ -12,7 +12,7 @@ def register_user(request):
         if form.is_valid():
             user = form.save()
             # login(request, user)
-            return redirect("login")
+            return redirect("../payapp")
             # messages.success(request, "Registration successful.")
             # return HttpResponse("Homepage")
         messages.error(request, "Unsuccessful registration. Invalid information.")
@@ -32,7 +32,7 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return render(request, "payapp/home.html")
+                return redirect("../payapp")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
