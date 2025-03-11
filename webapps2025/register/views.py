@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from register.forms import RegisterForm
+from register.models import RegisterForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
@@ -11,10 +11,10 @@ def register_user(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # login(request, user)
+        
             return redirect("../payapp")
-            # messages.success(request, "Registration successful.")
-            # return HttpResponse("Homepage")
+        messages.success(request, "Registration successful.")
+
         messages.error(request, "Unsuccessful registration. Invalid information.")
     else:
         form = RegisterForm()
