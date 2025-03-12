@@ -1,38 +1,51 @@
 {% extends 'base.html' %}
 
-
 {% block title %}
    Homepage
 {% endblock %}
 
 {% block content %}
-<!--Navbar-->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="home">WebApps</a>
+    <a class="navbar-brand" href="../payapp">PayApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
-
                 <li class="nav-item">
                     <a class="nav-link" href="../payapp">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Logout</a>
                 </li>
-
+                <!-- Notifications Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Notifications <span class="badge badge-pill badge-danger">{{ notifications|length }}</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if notifications %}
+                            {% for notification in notifications %}
+                                <a class="dropdown-item {% if not notification.read %}unread{% endif %}" href="{% url 'mark_as_read' notification.id %}">
+                                    {{ notification.message }} <small>({{ notification.created_at }})</small>
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            <a class="dropdown-item" href="#">No notifications</a>
+                        {% endif %}
+                    </div>
+                </li>
             {% else %}
-
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-
             {% endif %}
         </ul>
     </div>
 </nav>
-    <h2>Home</h2>
+
+<h2>Home</h2>
 
 {% endblock %}
