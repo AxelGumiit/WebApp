@@ -51,11 +51,11 @@
 
 <div class="text-center mt-5">
     {% if user.is_authenticated %}
-        <h2>Welcome {{ user.username }}! to our PayApp</h2>
+        <h2>Welcome {{ user.username }}!</h2>
+        <p>Your balance is: £{{ balance }}</p> 
     {% else %}
         <h2>Welcome to PayApp! Please log in.</h2>
     {% endif %}
 </div>
 
 {% endblock %}
-
