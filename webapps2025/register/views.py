@@ -35,15 +35,26 @@ def login_user(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
+            
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return redirect("../payapp")
+                
+     
+                if user.is_staff: 
+                    messages.info(request, f"You are now logged in as {username}.")
+                    return redirect("../payapp/admin")  
+                else:
+                    messages.info(request, f"You are now logged in as {username}.")
+                    return redirect("../payapp")  
+
             else:
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
+    
+    else:
+        form = AuthenticationForm()
+    
     return render(request, "register/login.html", {"login_user": form})
 
 

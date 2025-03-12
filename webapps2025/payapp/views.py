@@ -27,3 +27,7 @@ def mark_as_read(request, notification_id):
 
 
     return redirect('../payapp') 
+
+def admin_dashboard(request):
+
+    return render(request, 'payapp/admin.html')
