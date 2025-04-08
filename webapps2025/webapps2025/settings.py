@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -25,8 +24,7 @@ SECRET_KEY = 'django-insecure-r$n!0gjnky*x$omlrnsb9p2=u+ug5)(2m$9pq*q@0t#9e-_hfa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django_extensions',
     'crispy_forms',
     'crispy_bootstrap5',
     'payapp',
@@ -79,16 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webapps2025.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'webapps.db',
-    #}
-#}
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.sqlite3',
+# 'NAME': BASE_DIR / 'webapps.db',
+# }
+# }
 DATABASES = {
 
     'default': {
@@ -109,7 +106,6 @@ DATABASES = {
 
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -128,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -139,7 +134,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -160,13 +154,13 @@ AUTH_USER_MODEL = 'register.CustomUser'
 RECAPTCHA_PUBLIC_KEY = '6LcUyv0qAAAAAIElHxfQiI38cN3Lx41rcX37HhJP'
 RECAPTCHA_PRIVATE_KEY = '6LcUyv0qAAAAADBYXagPOqKWAgOwGVZVb4v0woTV'
 
-AXES_ENABLED = True 
-AXES_FAILURE_LIMIT = 5 
+AXES_ENABLED = True
+AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = timedelta(minutes=1)
 AXES_LOCK_OUT_BY_COMBINATION = True
 AXES_BEHIND_REVERSE_PROXY = True
 
-AUTHENTICATION_BACKENDS = (    
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'axes.backends.AxesStandaloneBackend',
 )
@@ -178,13 +172,9 @@ EMAIL_HOST_USER = 'axelgumiit2@gmail.com'
 EMAIL_HOST_PASSWORD = 'qsbr hdem fgyv tfte'
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/payapp/'  
-LOGOUT_REDIRECT_URL = '/login/'  
+LOGIN_REDIRECT_URL = '/payapp/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 86400 
-SESSION_COOKIE_SECURE = False 
-
-
-
-
+SESSION_COOKIE_AGE = 86400
+SESSION_COOKIE_SECURE = False
