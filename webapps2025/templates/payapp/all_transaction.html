@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}All Transactions{% endblock %}
+
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-center">
+      <a class="navbar-brand font-weight-bold text-white" href="../payapp/admin">
+        PayApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin/transactions">Transaction</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin/create">Create Admin</a>
+                </li>
+            {% else %}
+            {% endif %}
+        </ul>
+        <!-- Move logout button to the far right -->
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+<h3>All Transactions</h3>
+     <div class="list-group list-group-flush scrollable-container"  style="max-height: 100vh; overflow-y: auto">
+    {% if transactions %}
+        {% for transaction in transactions %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <!-- Sender and Receiver Information -->
+                        <div>
+                            <h5 class="card-title mb-1">
+                                {{ transaction.sender.username }} <span class="text-muted">→</span> {{ transaction.recipient.username }}
+                            </h5>
+                            <p class="card-text text-muted">
+                                <small>{{ transaction.created_at|date:"F j, Y, g:i a" }}</small>
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <!-- Transaction Amount -->
+                            <h5 class="card-title mb-1 {% if transaction.amount and transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                {% if transaction.amount is not None %}
+                                    {% if transaction.amount > 0 %}
+                                        +{{ transaction.amount|floatformat:2 }}
+                                    {% else %}
+                                        {{ transaction.amount|floatformat:2 }}
+                                    {% endif %}
+                                    <span class="small">{{ transaction.currency|default:"USD" }}</span>
+                                {% else %}
+                                    <span class="text-danger">No Amount</span>
+                                {% endif %}
+                            </h5>
+                        </div>
+                    </div>
+                    <p class="card-text">{{ transaction.description|default:"No description available." }}</p>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">Transaction ID: {{ transaction.id }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-muted">No transactions found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block style %}
+<style>
+ .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.card-body .d-flex {
+    align-items: center;
+}
+
+</style>
+{% endblock %}

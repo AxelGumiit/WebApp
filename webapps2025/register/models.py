@@ -1,15 +1,15 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from decimal import Decimal
 
-class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    currency = forms.ChoiceField(
-        choices=[('GBP', 'GBP'), ('USD', 'USD'), ('EUR', 'EUR')], 
-        required=True, 
-        label="Currency"
-    )
 
-    class Meta:
-        model = User
-        fields = ("username", "email", "first_name", "last_name", "password1", "password2", "currency")
+class CustomUser(AbstractUser):
+    Currency_Choices = [
+        ('GBP', 'Great Britain Pounds'),
+        ('USD', 'United States Dollars'),
+        ('EUR', 'Euro'),
+    ]
+   
+    email = models.EmailField(unique=True, blank=False)
+    currency = models.CharField(max_length=10, choices=Currency_Choices)
+    balance = models.DecimalField(decimal_places=2, max_digits=10, default=750)

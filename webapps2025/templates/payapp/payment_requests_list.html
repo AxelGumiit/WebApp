@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-lg">
+    <a class="navbar-brand font-weight-bold text-white" href="../payapp">
+        PayApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="../payapp">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Payment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="{% url 'request_payment' %}">Request Money</a>
+                        <a class="dropdown-item text-dark" href="../payapp/sent_money">Send Money</a>
+                        <a class="dropdown-item text-dark" href="/payment_requests">Payment Requests</a>
+                    </div>
+                <li class="nav-item">
+                    <a class="nav-link text-light position-relative" href="{% url 'notifications' %}">
+                        Notifications
+                        <span class="badge badge-pill badge-danger ms-2" id="notification-badge">
+                            {% if unread_notifications_count %}
+                                {{ unread_notifications_count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+                    </a>
+                </li>
+
+            {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Payment Requests</h2>
+
+    <!-- Received Requests -->
+    <h3>Received Requests</h3>
+    <div class="row">
+        {% for request in received_requests %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">From: {{ request.sender.username }}</h5>
+                        <p class="card-text">
+                            <strong>Amount:</strong> {{ request.amount }} {{ request.sender.currency }}<br>
+                            <strong>Converted Amount:</strong> {{ request.converted_amount }} {{ request.receiver.currency }}<br>
+                            <strong>Description:</strong> {{ request.description }}<br>
+                            <strong>Status:</strong> {{ request.status }}
+                        </p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'accept_payment_request' request.id %}" class="btn btn-success btn-sm w-48">Accept</a>
+                            <a href="{% url 'reject_payment_request' request.id %}" class="btn btn-danger btn-sm w-48">Reject</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No received requests.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Sent Requests -->
+    <h3 class="mt-5">Sent Requests</h3>
+    <div class="row">
+        {% for request in sent_requests %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">To: {{ request.receiver.username }}</h5>
+                        <p class="card-text">
+                            <strong> Amount</strong> {{ request.amount }} {{ request.sender.currency }}<br>
+                            <strong>Converted Amount:</strong> {{ request.converted_amount }} {{ request.receiver.currency }}<br>
+                            <strong>Description:</strong> {{ request.description }}<br>
+                            <strong>Status:</strong> {{ request.status }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No sent requests.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Accepted Requests -->
+    <h3 class="mt-5">Request Status</h3>
+    <div class="row">
+        {% for request in accepted_or_rejected_requests %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {% if request.receiver == user %}
+                                From: {{ request.sender.username }}
+                            {% else %}
+                                To: {{ request.receiver.username }}
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">
+                            <strong>Amount:</strong> {{request.converted_amount }} {{ request.receiver.currency }}<br>
+                            <strong>Description:</strong> {{ request.description }}<br>
+                            <strong>Status:</strong> {{ request.status }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No accepted requests.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

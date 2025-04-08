@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,11 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'crispy_forms',
     'crispy_bootstrap5',
     'payapp',
     'rest_framework',
     'register',
+    'currency_converter',
+    'captcha',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'webapps2025.urls'
@@ -78,11 +83,30 @@ WSGI_APPLICATION = 'webapps2025.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+#DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'webapps.db',
+    #}
+#}
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'webapps.db',
+
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'webapps2025',
+
+        'USER': 'postgres',
+
+        'PASSWORD': 'webapps2025',
+
+        'HOST': '127.0.0.1',
+
+        'PORT': '5432',
+
     }
+
 }
 
 
@@ -130,3 +154,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+AUTH_USER_MODEL = 'register.CustomUser'
+
+RECAPTCHA_PUBLIC_KEY = '6LcUyv0qAAAAAIElHxfQiI38cN3Lx41rcX37HhJP'
+RECAPTCHA_PRIVATE_KEY = '6LcUyv0qAAAAADBYXagPOqKWAgOwGVZVb4v0woTV'
+
+AXES_ENABLED = True 
+AXES_FAILURE_LIMIT = 5 
+AXES_COOLOFF_TIME = timedelta(minutes=1)
+AXES_LOCK_OUT_BY_COMBINATION = True
+AXES_BEHIND_REVERSE_PROXY = True
+
+AUTHENTICATION_BACKENDS = (    
+    'django.contrib.auth.backends.ModelBackend',
+    'axes.backends.AxesStandaloneBackend',
+)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'axelgumiit2@gmail.com'
+EMAIL_HOST_PASSWORD = 'qsbr hdem fgyv tfte'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/payapp/'  
+LOGOUT_REDIRECT_URL = '/login/'  
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 86400 
+SESSION_COOKIE_SECURE = False 
+
+
+
+

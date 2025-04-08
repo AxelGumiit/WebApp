@@ -1,0 +1,118 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Welcome to PayApp - Your Finance Hub
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-3">Welcome to PayApp</h1>
+        <p class="lead">Your go-to platform for easy online payments and money management.</p>
+        <a href="/register" class="btn btn-light btn-lg">Get Started</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Why Choose PayApp?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box mb-4">
+                    <i class="fas fa-wallet fa-3x mb-3"></i>
+                    <h4>Easy Payments</h4>
+                    <p>Send and receive money instantly, anywhere, anytime with our secure platform.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box mb-4">
+                    <i class="fas fa-lock fa-3x mb-3"></i>
+                    <h4>Secure Transactions</h4>
+                    <p>Your privacy and security are our top priorities. Enjoy peace of mind with every transaction.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box mb-4">
+                    <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <h4>Track Your Finances</h4>
+                    <p>Monitor your spending, view transaction history, and stay in control of your money.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call-to-Action Section -->
+<section class="cta bg-light text-center py-5">
+    <div class="container">
+        <h3 class="mb-4">Ready to Take Control of Your Finances?</h3>
+        <a href="/login" class="btn btn-primary btn-lg">Login</a>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* Hero Section Styles */
+    .hero {
+        background-color: #0070ba;
+        color: #fff;
+        padding: 100px 0;
+    }
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+    }
+    .hero p {
+        font-size: 1.25rem;
+    }
+    .hero .btn {
+        font-size: 1.125rem;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    /* Features Section Styles */
+    .features {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+    }
+    .features h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 40px;
+    }
+    .feature-box {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .feature-box h4 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    .feature-box p {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+    .feature-box i {
+        color: #0070ba;
+    }
+
+    .cta {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+    }
+    .cta h3 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}

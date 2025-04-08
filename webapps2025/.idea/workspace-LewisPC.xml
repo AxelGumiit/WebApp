@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d6d5146e-6fb7-46f8-a623-b1df68f83cab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Individual Project/experiments/experiment-methodology.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Individual Project/experiments/experiment-methodology.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Individual Project/experiments/io-chaos-command.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../Individual Project/experiments/io-chaos-command.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Individual Project/experiments/pod-chaos-command.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../Individual Project/experiments/pod-chaos-command.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LewisRye&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LewisRye/University.git&quot;,
+    &quot;accountId&quot;: &quot;cb338d52-995a-45f1-90c5-ec4ccf9a7e9b&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2tx8xyf7memF9uJREypz0HNnQ9k" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.webapps2025.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lewis/OneDrive - University of Sussex/Work/Coursework/Web Apps and Services/webapps2025/.venv/Lib/site-packages&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Lewis\OneDrive - University of Sussex\Work\Coursework\Web Apps and Services\webapps2025\.venv\Lib\site-packages" />
+      <recent name="C:\Users\Lewis\OneDrive - University of Sussex\Work\Coursework\Web Apps and Services\webapps2025\templates\payapp" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lewis\OneDrive - University of Sussex\Work\Coursework\Web Apps and Services\webapps2025\templates\payapp" />
+      <recent name="C:\Users\Lewis\OneDrive - University of Sussex\Work\Coursework\Web Apps and Services\webapps2025\templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="webapps2025" type="Python.DjangoServer" factoryName="Django server">
+      <module name="webapps2025" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="webapps2025.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26053.29" />
+        <option value="bundled-python-sdk-b1dbf8ef85a6-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26053.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6d5146e-6fb7-46f8-a623-b1df68f83cab" name="Changes" comment="" />
+      <created>1741282615871</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741282615871</updated>
+      <workItem from="1741282616871" duration="555000" />
+      <workItem from="1741349017790" duration="576000" />
+      <workItem from="1741349945144" duration="97000" />
+      <workItem from="1741365273497" duration="1301000" />
+      <workItem from="1741366703529" duration="3836000" />
+      <workItem from="1741690492598" duration="3097000" />
+      <workItem from="1741700326969" duration="3933000" />
+      <workItem from="1741709829143" duration="1582000" />
+      <workItem from="1741712019647" duration="1420000" />
+      <workItem from="1741776101951" duration="573000" />
+      <workItem from="1741777558289" duration="524000" />
+      <workItem from="1741778166979" duration="93000" />
+      <workItem from="1741778449589" duration="1034000" />
+      <workItem from="1741779883767" duration="2991000" />
+      <workItem from="1741783064457" duration="359000" />
+      <workItem from="1741783450455" duration="5656000" />
+      <workItem from="1741792658574" duration="3057000" />
+      <workItem from="1741795887649" duration="1439000" />
+      <workItem from="1741797372002" duration="125000" />
+      <workItem from="1741797532272" duration="143000" />
+      <workItem from="1741804646432" duration="180000" />
+      <workItem from="1741804951727" duration="538000" />
+      <workItem from="1741805986008" duration="883000" />
+      <workItem from="1741806944831" duration="1190000" />
+      <workItem from="1741951672466" duration="344000" />
+      <workItem from="1741966932033" duration="1287000" />
+      <workItem from="1742204834328" duration="93000" />
+      <workItem from="1742205111601" duration="139000" />
+      <workItem from="1742206774094" duration="3332000" />
+      <workItem from="1742223770106" duration="2245000" />
+      <workItem from="1742237001933" duration="7490000" />
+      <workItem from="1742244677445" duration="204000" />
+      <workItem from="1742296631504" duration="1595000" />
+      <workItem from="1742298251823" duration="158000" />
+      <workItem from="1742299068555" duration="831000" />
+      <workItem from="1742300173028" duration="1836000" />
+      <workItem from="1742305831824" duration="4235000" />
+      <workItem from="1742489496542" duration="16000" />
+      <workItem from="1742489654281" duration="167000" />
+      <workItem from="1742489992659" duration="1552000" />
+      <workItem from="1742498204590" duration="573000" />
+      <workItem from="1742498793266" duration="23000" />
+      <workItem from="1742935143877" duration="7000" />
+      <workItem from="1742935160398" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

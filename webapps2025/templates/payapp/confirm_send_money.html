@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-lg">
+    <a class="navbar-brand font-weight-bold text-white" href="../payapp">
+        PayApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="../payapp">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Payment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="{% url 'request_payment' %}">Request Money</a>
+                        <a class="dropdown-item text-dark" href="../payapp/sent_money">Send Money</a>
+                        <a class="dropdown-item text-dark" href="/payment_requests">Payment Requests</a>
+                    </div>
+                <li class="nav-item">
+                    <a class="nav-link text-light position-relative" href="{% url 'notifications' %}">
+                        Notifications
+                        <span class="badge badge-pill badge-danger ms-2" id="notification-badge">
+                            {% if unread_notifications_count %}
+                                {{ unread_notifications_count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+                    </a>
+                </li>
+
+            {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- Center the content with Flexbox -->
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="confirmation-box">
+        <h2 class="confirmation-title">Review Your Payment</h2>
+        
+        <div class="confirmation-details">
+            <p><strong>You're about to send:</strong></p>
+            <p class="amount">{{ amount_in_recipient_currency }} {{ recipient_currency }} to <strong>{{ recipient_username }}</strong></p>
+            <p><strong>Description:</strong> {{ description }}</p>
+        </div>
+
+        <div class="confirmation-actions">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-confirm">Confirm Payment</button>
+                <a href="{% url 'send_money' %}" class="btn btn-cancel">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+  
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+        min-height: 100vh;        
+        background-color: #f9fafb;
+        
+    }
+
+ 
+    .confirmation-box {
+        background: #ffffff;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        max-width: 500px;
+        text-align: center;
+       
+    }
+
+
+    .confirmation-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+    }
+
+  
+    .confirmation-details p {
+        font-size: 18px;
+        color: #555;
+        margin: 12px 0;
+    }
+
+    .confirmation-details .amount {
+        font-size: 22px;
+        font-weight: 600;
+        color: #0070ba;
+    }
+
+    /* Action buttons */
+    .confirmation-actions button, .confirmation-actions a {
+        display: inline-block;
+        padding: 15px 40px;
+        margin-top: 20px;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 18px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-confirm {
+        background-color: #0070ba;
+        color: white;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-confirm:hover {
+        background-color: #005fa3;
+        transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+        background-color: #e1e1e1;
+        color: #333;
+        border: 1px solid #d1d1d1;
+        margin-top: 12px;
+    }
+
+    .btn-cancel:hover {
+        background-color: #d1d1d1;
+        color: #333;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+        .confirmation-box {
+            padding: 25px 35px;
+        }
+
+        .confirmation-title {
+            font-size: 24px;
+        }
+
+        .confirmation-actions button, .confirmation-actions a {
+            font-size: 16px;
+            padding: 12px 30px;
+        }
+    }
+</style>
+{% endblock %}

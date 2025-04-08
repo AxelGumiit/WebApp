@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Create an Account
+{% endblock %}
+
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-center">
+  <a class="navbar-brand font-weight-bold text-white" href="../payapp/admin">
+        PayApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin">Users</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin/transactions">Transaction</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/payapp/admin/create">Create Admin</a>
+                </li>
+            {% endif %}
+        </ul>
+        <!-- Move logout button to the far right -->
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">Create a New Admin</h3>
+            <form method="POST" action="{% url 'create_admin' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_username">Username*</label>
+                    <input type="text" id="id_username" name="username" class="form-control" required>
+                    <small class="text-muted">Required. 150 characters or fewer. Letters, digits, and @/./+/-/_ only.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email">Email*</label>
+                    <input type="email" id="id_email" name="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_first_name">First Name*</label>
+                    <input type="text" id="id_first_name" name="first_name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_last_name">Last Name*</label>
+                    <input type="text" id="id_last_name" name="last_name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Password*</label>
+                    <input type="password" id="id_password" name="password" class="form-control" required>
+                    <small class="text-muted">
+                        • Your password must contain at least 8 characters.<br>
+                        • It can't be too similar to your personal information.<br>
+                        • It can't be a commonly used password.<br>
+                        • It can't be entirely numeric.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password2">Confirm Password*</label>
+                    <input type="password" id="id_password2" name="password2" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">Create Admin</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+/* Center the form vertically */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light grey background */
+}
+
+/* Style the form card */
+.card {
+    width: 100%;
+    max-width: 400px; /* Adjust width to match the register form */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    padding: 2rem;
+}
+
+/* Improve form field styling */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Style the button */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+button[type="submit"] {
+    margin-top: 20px; /* Adjust as needed */
+}
+
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Center heading */
+h3.text-center {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Style the text under inputs */
+small.text-muted {
+    display: block;
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* Link styling */
+p.text-center {
+    font-size: 14px;
+}
+
+p.text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+p.text-center a:hover {
+    text-decoration: underline;
+}
+
+
+</style>
+{% endblock %}

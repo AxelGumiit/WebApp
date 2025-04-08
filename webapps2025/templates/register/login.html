@@ -7,11 +7,73 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form method="post" class="form-group">
-        {% csrf_token %}
-        {{ login_user|crispy }}
-        <button type="submit" class="btn btn-success">Login</button>
-    </form>
-    <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm rounded-lg border-0">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Login</h2>
+                    <form method="post" class="form-group">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ login_user|crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <p class="text-center mt-3">Don't have an account? <a href="/register" class="text-primary">Create an account</a>.</p>
+                    <p class="text-center mt-2"><a href="{% url 'password_reset' %}" class="text-primary">Forgot your password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .form-group input {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        background-color: #0070ba;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #005f99;
+    }
+
+    a {
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
 {% endblock %}

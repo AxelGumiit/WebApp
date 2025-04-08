@@ -1,113 +1,220 @@
 {% extends 'base.html' %}
 
 {% block title %}
-   Homepage
+   PayPal - Homepage
 {% endblock %}
 
 {% block content %}
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
-    <a class="navbar-brand" href="../payapp">PayApp</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-lg">
+    <a class="navbar-brand font-weight-bold text-white" href="../payapp">
+        PayApp
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon text-white"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mx-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="../payapp">Home</a>
+                    <a class="nav-link text-light" href="../payapp">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Logout</a>
-                </li>
-                <!-- Payment Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Payment
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="">Request Money</a>
-                        <a class="dropdown-item" href="">Send Money</a>
+                        <a class="dropdown-item text-dark" href="{% url 'request_payment' %}">Request Money</a>
+                        <a class="dropdown-item text-dark" href="../payapp/sent_money">Send Money</a>
+                        <a class="dropdown-item text-dark" href="/payment_requests">Payment Requests</a>
                     </div>
-                </li>
-                <!-- Notifications Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Notifications <span class="badge badge-pill badge-danger">{{ notifications|length }}</span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if notifications %}
-                            {% for notification in notifications %}
-                                <a class="dropdown-item {% if not notification.read %}unread{% endif %}" href="{% url 'mark_as_read' notification.id %}">
-                                    {{ notification.message }} <small>({{ notification.created_at }})</small>
-                                </a>
-                            {% endfor %}
-                        {% else %}
-                            <a class="dropdown-item" href="#">No notifications</a>
-                        {% endif %}
-                    </div>
-                </li>
-            {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link text-light position-relative" href="{% url 'notifications' %}">
+                        Notifications
+                        <span class="badge badge-pill badge-danger ms-2" id="notification-badge">
+                            {% if unread_notifications_count %}
+                                {{ unread_notifications_count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+                    </a>
                 </li>
+
             {% endif %}
         </ul>
+
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
     </div>
 </nav>
 
-<div class="text-center mt-5">
-    {% if user.is_authenticated %}
-        <h2>Welcome {{ user.username }}!</h2>
-    {% else %}
-        <h2>Welcome to PayApp! Please log in.</h2>
-    {% endif %}
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-        <h3>Your Balance</h3>
-        <div class="card p-4 shadow-sm border-0 rounded-lg">
-            <h2 class="display-4">
-                {% if currency == 'GBP' %}
-                    £{{ balance }}
-                {% elif currency == 'USD' %}
-                    ${{ balance }}
-                {% elif currency == 'EUR' %}
-                    €{{ balance }}
-                {% else %}
-                    {{ balance }} {{ currency }}
-                {% endif %}
-            </h2>
-            <p class="text-muted">Your current available balance</p>
-        </div>
-    </div>
-</div>
-
 <div class="container mt-5">
-    <h3>Recent Transactions</h3>
-    <div class="list-group">
-        {% if transactions %}
-            {% for transaction in transactions %}
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ transaction.title }}</h5>
-                        <small>{{ transaction.created_at }}</small>
-                    </div>
-                    <p class="mb-1">{{ transaction.description }}</p>
-                    <small class="text-muted">
-                        {% if transaction.amount > 0 %}
-                            +{{ transaction.amount }} {{ transaction.currency }}
-                        {% else %}
-                            {{ transaction.amount }} {{ transaction.currency }}
-                        {% endif %}
-                    </small>
-                </a>
-            {% endfor %}
+    <div class="text-center">
+        {% if user.is_authenticated %}
+            <h2 class="text-dark">Welcome back, {{ user.username }}!</h2>
         {% else %}
-            <p>No recent transactions</p>
+            <h2 class="text-dark">Welcome to PayApp! Please log in.</h2>
         {% endif %}
     </div>
-</div>
 
+    <!-- Balance Section -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 text-center">
+            <h3 class="text-muted">Your Balance</h3>
+            <div class="card p-4 shadow-sm border-0 rounded-lg">
+                <h2 class="display-4 text-primary">
+                    {% if user.currency == 'GBP' %}
+                        £{{ balance }}
+                    {% elif user.currency == 'USD' %}
+                        ${{ balance }}
+                    {% elif user.currency == 'EUR' %}
+                        €{{ balance }}
+                    {% else %}
+                        {{ balance }} {{ currency }}
+                    {% endif %}
+                </h2>
+                <p class="text-muted">Your current available balance</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="container mt-5">
+        <h3 class="text-muted">Recent Transactions</h3>
+       <div class="list-group list-group-flush scrollable-container"  style="max-height: 55vh; overflow-y: auto">
+            {% if transactions %}
+                {% for transaction in transactions %}
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                           <h5 class="mb-1">
+                                {% if transaction.payment_request and transaction.payment_request.is_accepted %}
+                                    {% if transaction.sender == request.user %}
+                                        <span class="text-danger">
+                                            🔴 Sent Money to {{ transaction.recipient.username }}
+                                            <span class="badge bg-warning text-dark ms-2">Payment Request</span>
+                                        </span>
+                                    {% elif transaction.recipient == request.user %}
+                                        <span class="text-success">
+                                            🟢 Received from {{ transaction.sender.username }}
+                                            <span class="badge bg-warning text-dark ms-2">Payment Request</span>
+                                        </span>
+                                    {% endif %}
+                                {% elif transaction.recipient == request.user %}
+                                    <span class="text-success">
+                                        🟢 Received from {{ transaction.sender.username }}
+                                    </span>
+                                {% elif transaction.sender == request.user %}
+                                    <span class="text-danger">
+                                        🔴 Sent Money to {{ transaction.recipient.username }}
+                                    </span>
+                                {% else %}
+                                    <span class="text-muted">
+                                        ⬛ Transaction (no sender/recipient match)
+                                    </span>
+                                {% endif %}
+                            </h5>
+
+                            <small class="text-muted">{{ transaction.created_at|date:"F j, Y, g:i a" }}</small>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="font-weight-bold
+                                {% if transaction.payment_request and transaction.payment_request.is_accepted %}
+                                    {% if transaction.sender == request.user %}
+                                        text-danger
+                                    {% elif transaction.recipient == request.user %}
+                                        text-success
+                                    {% endif %}
+                                {% elif transaction.sender == request.user %}
+                                    text-danger
+                                {% else %}
+                                    text-success
+                                {% endif %}">
+
+                                {% if transaction.payment_request and transaction.payment_request.is_accepted %}
+                                    {% if transaction.sender == request.user %}
+                                        -{{ transaction.amount|floatformat:2 }} {{ transaction.currency }}
+                                    {% elif transaction.recipient == request.user %}
+                                        +{{ transaction.original_amount|floatformat:2 }} {{ transaction.original_currency }}
+                                    {% endif %}
+
+                                {% elif transaction.sender == request.user %}
+                                    -{{ transaction.original_amount|floatformat:2 }} {{ transaction.original_currency }}
+
+                                {% elif transaction.recipient == request.user %}
+                                    +{{ transaction.amount|floatformat:2 }} {{ transaction.currency }}
+
+                                {% endif %}
+                            </small>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-muted">No recent transactions</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block styles %}
+<style>
+
+
+.unread {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Adds a subtle glow to unread notifications */
+    transition: transform 0.3s ease-in-out;
+}
+
+.unread:hover {
+    transform: scale(1.05);
+}
+    /* Navbar notification dropdown */
+    .navbar-nav .nav-item.dropdown .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 250px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Optional: Style unread notifications */
+    .unread {
+        background-color: #f8f9fa; /* Light background for unread notifications */
+        font-weight: bold; /* Make unread notifications bold */
+    }
+
+    .notification-message {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    /* Adjust dropdown notification icon */
+    .notification-icon i {
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+
+    /* Optional: Dropdown arrow tweaks */
+    .dropdown-toggle::after {
+        content: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+        #notification-badge {
+            font-size: 0.8rem;
+            padding: 3px 7px;
+        }
+    }
+</style>
 {% endblock %}

@@ -5,44 +5,35 @@
 {% endblock %}
 
 {% block content %}
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
-    <a class="navbar-brand" href="../payapp">PayApp</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-lg">
+    <a class="navbar-brand font-weight-bold text-white" href="../payapp/admin">
+        PayApp
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon text-white"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mx-auto">
-            {% if user.is_authenticated %}
+            <ul class="navbar-nav mx-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../payapp/admin">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../payapp/admin/transactions">Transaction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../payapp/admin/create">Create Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../payapp">Home</a>
+                    <a class="nav-link text-light" href="/login">Logout</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Logout</a>
-                </li>
-                <!-- Notifications Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Notifications <span class="badge badge-pill badge-danger">{{ notifications|length }}</span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if notifications %}
-                            {% for notification in notifications %}
-                                <a class="dropdown-item {% if not notification.read %}unread{% endif %}" href="{% url 'mark_as_read' notification.id %}">
-                                    {{ notification.message }} <small>({{ notification.created_at }})</small>
-                                </a>
-                            {% endfor %}
-                        {% else %}
-                            <a class="dropdown-item" href="#">No notifications</a>
-                        {% endif %}
-                    </div>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-            {% endif %}
-        </ul>
+            </ul>
+        {% endif %}
     </div>
 </nav>
 
@@ -52,32 +43,137 @@
     {% else %}
         <h2>Welcome to PayApp! Please log in.</h2>
     {% endif %}
-</div>
-
-<div class="container mt-5">
-    <h3>All Transactions</h3>
-    <div class="list-group">
-        {% if transactions %}
-            {% for transaction in transactions %}
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ transaction.title }}</h5>
-                        <small>{{ transaction.created_at }}</small>
-                    </div>
-                    <p class="mb-1">{{ transaction.description }}</p>
-                    <small class="text-muted">
-                        {% if transaction.amount > 0 %}
-                            +{{ transaction.amount }} {{ transaction.currency }}
-                        {% else %}
-                            {{ transaction.amount }} {{ transaction.currency }}
+    <div class="container mt-5">
+        <h3>All Users</h3>
+        <div class="list-group list-group-flush scrollable-container"  style="max-height: 55vh; overflow-y: auto">
+            {% if users %}
+                {% for user in users %}
+                    <a href="#" class="list-group-item list-group-item-action user-card">
+                        <div class="d-flex w-100 justify-content-between user-header">
+                            <h5 class="mb-1 user-username">Username: {{ user.username }}</h5>
+                            <small class="user-date">Date Joined: {{ user.date_joined }}</small>
+                        </div>
+                        <p class="mb-1 user-email"> Email: {{ user.email }}</p>
+                        {% if not user.is_superuser %}
+                        <p class="mb-1 user-email"> Full Name:{{ user.first_name }} {{ user.last_name }}</p>
                         {% endif %}
-                    </small>
-                </a>
-            {% endfor %}
-        {% else %}
-            <p>No transactions</p>
-        {% endif %}
+                        <!-- Display currency balance (if available) -->
+                        {% if not user.is_superuser %}
+                        {% if user.balance %}
+                            <p class="mb-1 user-balance">Balance: ${{ user.balance }}</p>
+                        {% else %}
+                            <p class="mb-1 user-balance">Balance: Not available</p>
+                        {% endif %}
+                        {% endif %}
+                        
+                        <!-- Display superuser status -->
+                        {% if user.is_superuser %}
+                            <p class="mb-1 user-superuser text-success">Role: Superuser</p>
+                        {% else %}
+                            <p class="mb-1 user-superuser text-danger">Role: User</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>No users found</p>
+            {% endif %}
+        </div>
     </div>
-</div>
+    
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* General container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Header styling */
+h3 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+
+/* List group styling */
+.list-group {
+    margin: 0;
+    padding: 0;
+}
+
+/* User card styling */
+.user-card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+/* Hover effect for user card */
+.user-card:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for user header (username and date) */
+.user-header {
+    margin-bottom: 10px;
+}
+
+.user-username {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.user-date {
+    font-size: 0.875rem;
+    color: #777;
+}
+
+/* Styling for user email */
+.user-email {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* Styling for user's first and last name */
+.user-name {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Styling for user balance */
+.user-balance {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Styling for superuser status */
+.user-superuser {
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Superuser status colors */
+.text-success {
+    color: #28a745;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+</style>
 
 {% endblock %}

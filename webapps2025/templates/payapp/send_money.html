@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Fixed navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-lg">
+    <a class="navbar-brand font-weight-bold text-white" href="../payapp">
+        PayApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="../payapp">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Payment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="{% url 'request_payment' %}">Request Money</a>
+                        <a class="dropdown-item text-dark" href="../payapp/sent_money">Send Money</a>
+                        <a class="dropdown-item text-dark" href="/payment_requests">Payment Requests</a>
+                    </div>
+                <li class="nav-item">
+                    <a class="nav-link text-light position-relative" href="{% url 'notifications' %}">
+                        Notifications
+                        <span class="badge badge-pill badge-danger ms-2" id="notification-badge">
+                            {% if unread_notifications_count %}
+                                {{ unread_notifications_count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+                    </a>
+                </li>
+
+            {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Logout</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
+<!-- Container for the Send Money Form -->
+<div class="container mt-5 pt-5">
+    <h2 class="text-center mb-4">Send Money</h2>
+
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Recipient Section (Updated to email input) -->
+                <div class="form-group mb-4">
+                    <label for="recipient_email">Recipient Email:</label>
+                    <input type="email" class="form-control" name="recipient_email" required placeholder="Enter recipient's email">
+                    {% if form.recipient_email.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.recipient_email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Amount Section -->
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" class="form-control" name="amount"  required step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description (optional):</label>
+                    <textarea class="form-control" name="description"></textarea>
+                </div>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">Send Money</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="mt-5 text-center">
+        <p class="text-muted">By continuing, you agree to the <a href="#" class="text-primary">Terms and Conditions</a> and <a href="#" class="text-primary">Privacy Policy</a>.</p>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Custom styles -->
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+  }
+
+  .container {
+      max-width: 600px;
+  }
+
+  .card {
+      border-radius: 8px;
+      border: none;
+  }
+
+  .card-body {
+      padding: 20px;
+  }
+
+  .btn-primary {
+      background-color: #0070ba;
+      border: none;
+      font-size: 18px;
+      padding: 12px;
+  }
+
+  .btn-primary:hover {
+      background-color: #005e91;
+  }
+
+  .form-group {
+      margin-bottom: 15px;
+  }
+
+  .form-group label {
+      font-weight: bold;
+  }
+
+  .invalid-feedback p {
+      color: #e74c3c;
+  }
+
+  .text-center p {
+      font-size: 14px;
+      color: #777;
+  }
+
+  .text-center a {
+      color: #0070ba;
+  }
+
+  .text-center a:hover {
+      text-decoration: underline;
+  }
+
+  /* Fixed navbar styling */
+  .navbar {
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      right: 0;
+  }
+
+  .navbar .navbar-nav {
+      flex-direction: row;
+  }
+
+  .navbar-nav .nav-item {
+      margin-right: 20px;
+  }
+
+  .navbar-nav .nav-link {
+      font-size: 1.1rem;
+  }
+
+  .mt-5 {
+      margin-top: 80px;
+  }
+
+  .pt-5 {
+      padding-top: 80px;
+  }
+</style>

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   Homepage
+{% endblock %}
+
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <a class="navbar-brand" href="../payapp">PayApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mx-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="../payapp">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Logout</a>
+                </li>
+                <!-- Payment Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Payment
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Request Money</a>
+                        <a class="dropdown-item" href="">Send Money</a>
+                    </div>
+                </li>
+                <!-- Notifications Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Notifications <span class="badge badge-pill badge-danger">{{ notifications|length }}</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if notifications %}
+                            {% for notification in notifications %}
+                                <a class="dropdown-item {% if not notification.read %}unread{% endif %}" href="{% url 'mark_as_read' notification.id %}">
+                                    {{ notification.message }} <small>({{ notification.created_at }})</small>
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            <a class="dropdown-item" href="#">No notifications</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="text-center mt-5">
+    {% if user.is_authenticated %}
+        <h2>Welcome {{ user.username }}!</h2>
+    {% else %}
+        <h2>Welcome to PayApp! Please log in.</h2>
+    {% endif %}
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <h3>Your Balance</h3>
+        <div class="card p-4 shadow-sm border-0 rounded-lg">
+            <h2 class="display-4">
+                {% if currency == 'GBP' %}
+                    £{{ balance }}
+                {% elif currency == 'USD' %}
+                    ${{ balance }}
+                {% elif currency == 'EUR' %}
+                    €{{ balance }}
+                {% else %}
+                    {{ balance }} {{ currency }}
+                {% endif %}
+            </h2>
+            <p class="text-muted">Your current available balance</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3>Recent Transactions</h3>
+    <div class="list-group">
+        {% if transactions %}
+            {% for transaction in transactions %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ transaction.title }}</h5>
+                        <small>{{ transaction.created_at }}</small>
+                    </div>
+                    <p class="mb-1">{{ transaction.description }}</p>
+                    <small class="text-muted">
+                        {% if transaction.amount > 0 %}
+                            +{{ transaction.amount }} {{ transaction.currency }}
+                        {% else %}
+                            {{ transaction.amount }} {{ transaction.currency }}
+                        {% endif %}
+                    </small>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>No recent transactions</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
