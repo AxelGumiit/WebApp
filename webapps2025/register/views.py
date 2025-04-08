@@ -23,7 +23,7 @@ def register_user(request):
 
             # Currency conversion logic
             if currency != 'GBP':
-                conversion_url = f"http://127.0.0.1:8000/currency/conversion/GBP/{currency}/{default_balance}/"
+                conversion_url = f"http://127.0.0.1:8000/webapps2025/conversion/GBP/{currency}/{default_balance}/"
                 try:
                     response = requests.get(conversion_url)
 
@@ -46,12 +46,12 @@ def register_user(request):
             # Save the user with the updated balance
             user.save()
 
-            # Log the user in
+
             login(request=request, user=user, backend='django.contrib.auth.backends.ModelBackend')
 
             messages.success(request, f'Account created for {user.username}!')
 
-            # Redirect to the payapp page
+
             return redirect('../payapp')
     else:
         form = RegisterForm()

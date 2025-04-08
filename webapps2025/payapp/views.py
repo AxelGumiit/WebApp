@@ -335,7 +335,7 @@ def accept_payment_request(request, request_id):
 
 
     if sender.currency != receiver.currency:
-        conversion_url = f"http://127.0.0.1:8000/currency/conversion/{sender.currency}/{receiver.currency}/{amount}/"
+        conversion_url = f"http://127.0.0.1:8000/webapps2025/conversion/{sender.currency}/{receiver.currency}/{amount}/"
         try:
             response = requests.get(conversion_url)
             if response.status_code == 200:
