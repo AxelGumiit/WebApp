@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r$n!0gjnky*x$omlrnsb9p2=u+ug5)(2m$9pq*q@0t#9e-_hfa'
+
+SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,23 +91,14 @@ WSGI_APPLICATION = 'webapps2025.wsgi.application'
 # }
 # }
 DATABASES = {
-
     'default': {
-
         'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'webapps2025',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'webapps2025',
-
-        'HOST': '127.0.0.1',
-
-        'PORT': '5432',
-
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
     }
-
 }
 
 # Password validation
@@ -151,8 +146,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 AUTH_USER_MODEL = 'register.CustomUser'
 
-RECAPTCHA_PUBLIC_KEY = '6LcUyv0qAAAAAIElHxfQiI38cN3Lx41rcX37HhJP'
-RECAPTCHA_PRIVATE_KEY = '6LcUyv0qAAAAADBYXagPOqKWAgOwGVZVb4v0woTV'
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 AXES_ENABLED = True
 AXES_FAILURE_LIMIT = 5
@@ -168,8 +163,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'axelgumiit2@gmail.com'
-EMAIL_HOST_PASSWORD = 'qsbr hdem fgyv tfte'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/payapp/'
